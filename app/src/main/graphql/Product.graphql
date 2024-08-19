@@ -1,0 +1,28 @@
+query GetProducts($limit:Int!, $offset:Int!, $productName:String!){
+    getProducts(limit: $limit, offset: $offset, productName: $productName) {
+        products {
+            id
+            name
+            price
+            shopName
+            thumbnailImageUrl
+            rating
+            ratingCount
+        }
+        totalCount
+    }
+}
+
+query GetProduct($id:ID!){
+    getProduct(id: $id) {
+        id
+        name
+        price
+        shopName
+        thumbnailImageUrl
+        rating
+        ratingCount
+        description
+        productImageUrls
+    }
+}

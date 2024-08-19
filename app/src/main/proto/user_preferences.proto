@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.luteh.ecommerce";
+option java_multiple_files = true;
+
+message UserPreferences {
+  bool is_logged_in = 1;
+  string username = 2;
+}
