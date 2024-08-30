@@ -177,4 +177,7 @@ dependencies {
     implementation(libs.material.icon)
     implementation(libs.play.services.auth)
     implementation(libs.accompanist.swiperefresh)
+
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
