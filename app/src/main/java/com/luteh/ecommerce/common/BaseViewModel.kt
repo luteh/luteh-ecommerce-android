@@ -5,6 +5,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 
 /**
  * Base ViewModel class with state, event, and effect handling.
@@ -42,7 +43,7 @@ abstract class BaseViewModel<State, Event, Effect>(initialState: State) : ViewMo
      * @param reducer A function that takes the current state and returns a new state
      */
     protected fun updateState(reducer: (State) -> State) {
-        _state.value = reducer(_state.value)
+        _state.update(reducer)
     }
 
     /**
