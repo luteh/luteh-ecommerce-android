@@ -12,14 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.luteh.ecommerce.BuildConfig
 import com.luteh.ecommerce.BuildConfig.CLIENT_ID
 import com.luteh.ecommerce.UserPreferences
-import com.luteh.ecommerce.data.datasource.local.AuthLocalDataSource
 import com.luteh.ecommerce.data.datasource.local.UserPreferencesSerializer
-import com.luteh.ecommerce.data.datasource.remote.AuthRemoteDataSource
-import com.luteh.ecommerce.data.datasource.remote.ProductRemoteDataSource
-import com.luteh.ecommerce.data.repository.AuthRepositoryImpl
-import com.luteh.ecommerce.data.repository.ProductRepositoryImpl
-import com.luteh.ecommerce.domain.repository.AuthRepository
-import com.luteh.ecommerce.domain.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -91,22 +84,5 @@ object DiModule {
             .serverUrl("http://10.0.2.2:4000/graphql")
             .okHttpClient(okHttpClient)
             .build();
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthRepository(
-        localDataSource: AuthLocalDataSource,
-        remoteDataSource: AuthRemoteDataSource
-    ): AuthRepository {
-        return AuthRepositoryImpl(localDataSource, remoteDataSource)
-    }
-
-    @Provides
-    @Singleton
-    fun provideProductRepository(
-        productRemoteDataSource: ProductRemoteDataSource
-    ): ProductRepository {
-        return ProductRepositoryImpl(productRemoteDataSource)
     }
 }
