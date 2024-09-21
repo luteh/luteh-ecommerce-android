@@ -18,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,6 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -34,6 +36,7 @@ import com.google.android.gms.common.api.ApiException
 import com.luteh.ecommerce.R
 import com.luteh.ecommerce.common.AuthResultContract
 import com.luteh.ecommerce.common.ResultState
+import com.luteh.ecommerce.ui.component.RoundedTextField
 
 @Composable
 fun LoginScreen(
@@ -97,9 +100,9 @@ fun LoginScreen(
                         modifier = Modifier
                             .padding(16.dp)
                     ) {
-                        TextField(
+                        RoundedTextField(
                             modifier = Modifier.fillMaxWidth(),
-                            value = state.value.email,
+                            valueText = state.value.email,
                             onValueChange = {
                                 vm.processEvent(
                                     LoginViewModel.Event.OnChangeEmailText(
@@ -107,14 +110,15 @@ fun LoginScreen(
                                     )
                                 )
                             },
-                            label = {
-                                Text(text = stringResource(R.string.email))
-                            }
+                            labelText = stringResource(R.string.email),
+                            singleLine = true,
+                            keyboardType = KeyboardType.Email,
+                            imeAction = ImeAction.Next
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        TextField(
+                        RoundedTextField(
                             modifier = Modifier.fillMaxWidth(),
-                            value = state.value.password,
+                            valueText = state.value.password,
                             onValueChange = {
                                 vm.processEvent(
                                     LoginViewModel.Event.OnChangePasswordText(
@@ -122,9 +126,11 @@ fun LoginScreen(
                                     )
                                 )
                             },
-                            label = {
-                                Text(text = stringResource(R.string.password))
-                            }
+                            labelText = stringResource(R.string.password),
+                            visualTransformation = PasswordVisualTransformation('*'),
+                            singleLine = true,
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Next
                         )
                         Spacer(modifier = Modifier.height(32.dp))
                         Button(modifier = Modifier
