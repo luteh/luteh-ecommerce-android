@@ -26,8 +26,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.luteh.ecommerce.common.ResultState
 import com.luteh.ecommerce.ui.component.ErrorView
 import com.luteh.ecommerce.ui.component.LoadingView
-import com.luteh.ecommerce.ui.screen.productdetail.component.CompanySection
-import com.luteh.ecommerce.ui.screen.productdetail.component.JobSpecificationSection
+import com.luteh.ecommerce.ui.screen.productdetail.component.ProductDetailFooter
+import com.luteh.ecommerce.ui.screen.productdetail.component.ProductDetailsSection
+import com.luteh.ecommerce.ui.screen.productdetail.component.ProductImagesSection
+import com.luteh.ecommerce.ui.screen.productdetail.component.ProductReviewSection
+import com.luteh.ecommerce.ui.screen.productdetail.component.SellerSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,17 +69,25 @@ fun ProductDetailScreen(
                         vm.getProductById(id)
                     }
 
-                    is ResultState.Success -> Column(
-                        modifier = Modifier
-                            .verticalScroll(
-                                rememberScrollState()
-                            )
-                            .padding(16.dp)
-                    ) {
-                        val data = result.data
-                        CompanySection(data = data)
-                        Spacer(Modifier.padding(8.dp))
-                        JobSpecificationSection(data = data)
+                    is ResultState.Success -> Column {
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(
+                                    rememberScrollState()
+                                )
+                                .weight(1f)
+                        ) {
+                            val data = result.data
+                            ProductImagesSection(imageUrls = data.imageUrls)
+                            Spacer(Modifier.padding(8.dp))
+                            SellerSection(data = data)
+                            Spacer(Modifier.padding(8.dp))
+                            ProductDetailsSection(data = data)
+                            Spacer(Modifier.padding(8.dp))
+                            ProductReviewSection(reviews = data.reviews)
+                            Spacer(Modifier.padding(8.dp))
+                        }
+                        ProductDetailFooter(data = result.data)
                     }
 
                     else -> LoadingView()

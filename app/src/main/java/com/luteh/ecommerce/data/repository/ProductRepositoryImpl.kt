@@ -9,6 +9,7 @@ import com.luteh.ecommerce.data.datasource.mediator.ProductsPagingSource
 import com.luteh.ecommerce.data.datasource.remote.ProductRemoteDataSource
 import com.luteh.ecommerce.domain.model.ProductDetailModel
 import com.luteh.ecommerce.domain.model.ProductModel
+import com.luteh.ecommerce.domain.model.ProductReview
 import com.luteh.ecommerce.domain.repository.ProductRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.random.Random
 
 class ProductRepositoryImpl @Inject constructor(private val productRemoteDataSource: ProductRemoteDataSource) :
     ProductRepository {
@@ -51,7 +53,8 @@ class ProductRepositoryImpl @Inject constructor(private val productRemoteDataSou
                         rating = product.rating ?: 0.0,
                         ratingCount = product.ratingCount ?: 0,
                         description = product.description,
-                        imageUrls = product.productImageUrls?.filterNotNull().orEmpty()
+                        imageUrls = product.productImageUrls?.filterNotNull().orEmpty(),
+                        reviews = List(Random.nextInt(1, 5)) { ProductReview.dummy }
                     )
                 }
                 Either.Right(data)
