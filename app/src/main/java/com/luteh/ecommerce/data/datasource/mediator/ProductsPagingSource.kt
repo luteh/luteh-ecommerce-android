@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.luteh.ecommerce.GetProductsQuery
 import com.luteh.ecommerce.data.datasource.remote.ProductRemoteDataSource
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class ProductsPagingSource @Inject constructor(
@@ -15,6 +16,7 @@ class ProductsPagingSource @Inject constructor(
     ): LoadResult<Int, GetProductsQuery.Product> {
         try {
             // Start refresh at page 0 if undefined.
+            delay(1000L)
             val nextPageNumber = params.key ?: 0
             val data =
                 productRemoteDataSource.getProducts(
